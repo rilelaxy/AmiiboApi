@@ -1,6 +1,21 @@
+"""
+controller.py
+by Riley
+Python code to search for Amiibo information
+"""
+
 import requests
 
 def get_amiibo_data(name=None):
+    """
+    Get Amiibo data from the Amiibo API
+
+    Args:
+        name (str, optional): The name of the Amiibo to search for
+
+    Returns:
+        dict or None: The Amiibo data as a dictionary if found otherwise None
+    """
     base_url = "https://www.amiiboapi.com/api/amiibo/"
     url = base_url
     if name:
@@ -12,10 +27,9 @@ def get_amiibo_data(name=None):
         data = response.json()
         return data
     else:
-        print(f"Error: {response.status_code}")
+        print(f"Error: {response.status_code}") 
 
 def main():
-    # Example usage
     amiibo_name = input("Enter the name of the Amiibo (leave blank to see all): ")
     amiibo_data = get_amiibo_data(amiibo_name)
     

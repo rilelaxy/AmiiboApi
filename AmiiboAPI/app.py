@@ -1,18 +1,22 @@
 import sys
 import requests
 from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit, QMessageBox
+from PyQt6.QtGui import QIcon
 
 
 class AmiiboApp(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("Amiibo API App")
+        self.setWindowTitle("Amiibo Finder")
+        self.setWindowIcon(QIcon("AmiiboAPI\AmiiboAPI\icon.png"))  
         self.setGeometry(100, 100, 400, 200)
 
         layout = QVBoxLayout()
+        layout.setContentsMargins(20, 20, 20, 20)  
 
         self.amiibo_name_input = QLineEdit()
+        self.amiibo_name_input.setPlaceholderText("Enter Amiibo Name")  # Placeholder text
         layout.addWidget(self.amiibo_name_input)
 
         self.search_button = QPushButton("Search")
@@ -29,7 +33,7 @@ class AmiiboApp(QMainWindow):
     def search_amiibo(self):
         amiibo_name = self.amiibo_name_input.text()
         if not amiibo_name:
-            QMessageBox.warning(self, "Warning", "Please enter an Amiibo name.")
+            QMessageBox.warning(self, "Warning", "Please enter an Amiibo name.") # Error handling
             return
 
         url = f"https://www.amiiboapi.com/api/amiibo/?name={amiibo_name}"
