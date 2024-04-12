@@ -10,7 +10,7 @@ class AmiiboApp(QMainWindow):
 
         self.setWindowTitle("Amiibo Finder")
         self.setWindowIcon(QIcon("AmiiboAPI\AmiiboAPI\icon.png"))  
-        self.setGeometry(100, 100, 400, 200)
+        self.setGeometry(500, 500, 300, 200)
 
         layout = QVBoxLayout()
         layout.setContentsMargins(20, 20, 20, 20)  
