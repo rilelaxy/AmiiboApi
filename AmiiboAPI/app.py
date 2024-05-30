@@ -7,13 +7,46 @@ from PyQt6.QtGui import QIcon
 class AmiiboApp(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.setStyleSheet('''
+            QMainWindow{
+                background-color: #EEFFB0;
+            }
+            QPushButton{
+                background-color: #FFFFFF;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                margin: 10px 0 0 0;
+                color: #E5001E;
+            }
+            *{
+                color: #403f3e;
+                font-family: "Montserrat";
+                font-size: 12px;
+                font-weight: 700;
+            }
+            QLineEdit{
+                padding: 5px 2.5px;
+                border-radius: 5px;
+            }
+            QLabel{
+                color: #648000;
+            }
+            QPushButton:pressed {
+            background-color: #dfdfdf
+            }
+        ''')
 
         self.setWindowTitle("Amiibo Finder")
-        self.setWindowIcon(QIcon("AmiiboAPI\AmiiboAPI\icon.png"))  
-        self.setGeometry(500, 500, 300, 200)
+        self.setWindowIcon(QIcon("AmiiboAPI\icon.png"))  
+        self.setGeometry(900, 300, 300, 500)
 
         layout = QVBoxLayout()
-        layout.setContentsMargins(20, 20, 20, 20)  
+        layout.setContentsMargins(20, 20, 20, 500)  
+
+        self.welcome = QLabel()
+        self.welcome.setText("Welcome \nTo Amiibo Finder")
+        layout.addWidget(self.welcome)
 
         self.amiibo_name_input = QLineEdit()
         self.amiibo_name_input.setPlaceholderText("Enter Amiibo Name")  # Placeholder text
@@ -23,12 +56,22 @@ class AmiiboApp(QMainWindow):
         self.search_button.clicked.connect(self.search_amiibo)
         layout.addWidget(self.search_button)
 
+        self.categories = QLabel()
+        self.categories.setText("Categories")
+        layout.addWidget(self.categories)
+        
         self.response_label = QLabel()
         layout.addWidget(self.response_label)
 
         central_widget = QWidget()
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
+
+
+
+        self.topamiibo = QLabel()
+        self.topamiibo.setText("Top Amiibo")
+        layout.addWidget(self.topamiibo)
 
     def search_amiibo(self):
         amiibo_name = self.amiibo_name_input.text()
