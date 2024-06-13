@@ -1,0 +1,40 @@
+QMainWindow {
+    background-color: #EEFFB0;
+}
+
+QPushButton {
+    background-color: #FFFFFF;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin: 10px 0 0 0;
+    color: #E5001E;
+}
+
+* {
+    color: #403f3e;
+    font-family: "Montserrat";
+    font-size: 12px;
+    font-weight: 700;
+}
+
+QLineEdit {
+    padding: 5px 2.5px;
+    border-radius: 5px;
+}
+
+QLabel {
+    color: #648000;
+}
+
+QPushButton:pressed {
+    background-color: #dfdfdf
+}
+
+QFrame#whiteBox {
+    background-color: #FFFFFF;
+    border: 2px solid #dfdfdf;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}

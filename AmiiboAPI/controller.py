@@ -1,43 +1,36 @@
-"""
-controller.py
-by Riley
-Python code to search for Amiibo information
-"""
-
 import requests
+from PyQt6.QtWidgets import QMessageBox
 
-def get_amiibo_data(name=None):
+def search_amiibo(amiibo_name, app_instance):
     """
-    Get Amiibo data from the Amiibo API
-
-    Args:
-        name (str, optional): The name of the Amiibo to search for
-
-    Returns:
-        dict or None: The Amiibo data as a dictionary if found otherwise None
+    Searches for Amiibo data based on the provided name
     """
-    base_url = "https://www.amiiboapi.com/api/amiibo/"
-    url = base_url
-    if name:
-        url += f"?name={name}"
-    
-    response = requests.get(url)
-    
-    if response.ok:
+    if not amiibo_name:
+        QMessageBox.warning(app_instance, "Warning", "Please enter an Amiibo name.")
+        return
+
+    url = f"https://www.amiiboapi.com/api/amiibo/?name={amiibo_name}"
+    try:
+        response = requests.get(url)
         data = response.json()
-        return data
-    else:
-        print(f"Error: {response.status_code}") 
+        if 'amiibo' in data and data['amiibo']:
+            amiibo_data = data['amiibo'][0]
+            display_amiibo_info(amiibo_data, app_instance)
+        else:
+            app_instance.series_value.setText("")
+            app_instance.release_value.setText("")
+            app_instance.name_value.setText("Amiibo not found.")
+    except Exception as e:
+        QMessageBox.critical(app_instance, "Error", f"Error fetching Amiibo data: {str(e)}")
 
-def main():
-    amiibo_name = input("Enter the name of the Amiibo (leave blank to see all): ")
-    amiibo_data = get_amiibo_data(amiibo_name)
-    
-    if amiibo_data:
-        print("Amiibo Data:")
-        print(amiibo_data)
-    else:
-        print("No data found for the provided Amiibo name.")
+def display_amiibo_info(amiibo_data, app_instance):
+    """
+    Updates the app with the  Amiibo information.
+    """
+    name = amiibo_data.get('name', 'N/A')
+    series = amiibo_data.get('amiiboSeries', 'N/A')
+    release = amiibo_data.get('release', {}).get('na', 'N/A')
 
-if __name__ == "__main__":
-    main()
+    app_instance.name_value.setText(name)
+    app_instance.series_value.setText(series)
+    app_instance.release_value.setText(release)
